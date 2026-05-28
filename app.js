@@ -544,13 +544,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (badge) {
     if (getGroqApiKey()) {
       badge.innerHTML = '<i class="fa-solid fa-circle-check"></i> Groq API Active';
-      badge.style.color = "var(--accent-green, #10b981)";
-    } else {
-      badge.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> API Key ضروری ہے';
-      badge.style.color = "var(--accent-red, #ef4444)";
-      badge.style.cursor = "pointer";
-      badge.title = "یہاں کلک کریں Groq API Key داخل کریں";
-      badge.onclick = showApiKeyModal;
+      badge.style.color = "var(--accent-cyan)";
     }
   }
 
@@ -726,12 +720,11 @@ function clearUploadedFile() {
 const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
 const GROQ_MODEL   = "llama-3.3-70b-versatile";
 
-// API key: پہلے localStorage سے لیتے ہیں، نہ ہو تو user سے مانگتے ہیں
+// API key yahan rakhen — koi bhi user se nahi manga jayega
+const GROQ_API_KEY = "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";
+
 function getGroqApiKey() {
-  return localStorage.getItem("groq_api_key") || "";
-}
-function saveGroqApiKey(key) {
-  localStorage.setItem("groq_api_key", key.trim());
+  return GROQ_API_KEY;
 }
 
 // System prompt — آپ کی مکمل specification بعینہ
@@ -803,62 +796,6 @@ You are "Ustad Ji" — an exceptionally kind, warm, and highly capable teacher o
 10. Output must be valid HTML (inline styles only) that renders beautifully in a dark-themed chat interface.`;
 
 // ============================================================
-// API KEY MODAL — پہلی بار key نہ ہو تو دکھاؤ
-// ============================================================
-function showApiKeyModal() {
-  if (document.getElementById("api-key-modal")) return;
-  const modal = document.createElement("div");
-  modal.id = "api-key-modal";
-  modal.style.cssText = `
-    position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;
-    display:flex;align-items:center;justify-content:center;padding:1rem;
-  `;
-  modal.innerHTML = `
-    <div style="background:var(--bg-card);border:1px solid var(--border-color);border-radius:20px;
-      padding:2rem;max-width:460px;width:100%;box-shadow:0 0 40px rgba(144,101,255,0.25);">
-      <div style="text-align:center;margin-bottom:1.5rem;">
-        <i class="fa-solid fa-key" style="font-size:2rem;color:var(--accent-cyan);"></i>
-        <h2 style="color:var(--text-white);margin:0.75rem 0 0.3rem;font-size:1.4rem;" class="ur-text">
-          Groq API Key درکار ہے
-        </h2>
-        <p style="color:var(--text-muted);font-size:0.9rem;" class="ur-text">
-          مفت key حاصل کریں: <a href="https://console.groq.com" target="_blank"
-          style="color:var(--accent-cyan);">console.groq.com</a>
-        </p>
-      </div>
-      <input type="password" id="api-key-input" placeholder="gsk_..." 
-        style="width:100%;padding:0.9rem 1rem;border-radius:10px;border:1px solid var(--border-color);
-        background:var(--bg-dark);color:var(--text-white);font-size:0.95rem;
-        outline:none;box-sizing:border-box;margin-bottom:0.75rem;"
-        onkeydown="if(event.key==='Enter')saveKeyAndClose()">
-      <p style="color:var(--text-muted);font-size:0.78rem;margin-bottom:1rem;" class="ur-text">
-        🔒 آپ کی key صرف آپ کے browser میں محفوظ ہوگی — کہیں نہیں جائے گی
-      </p>
-      <button onclick="saveKeyAndClose()" style="width:100%;padding:0.9rem;border-radius:10px;
-        background:linear-gradient(135deg,var(--primary),var(--accent-cyan));border:none;
-        color:white;font-size:1rem;font-weight:700;cursor:pointer;" class="ur-text">
-        محفوظ کریں اور شروع کریں
-      </button>
-    </div>
-  `;
-  document.body.appendChild(modal);
-  setTimeout(() => document.getElementById("api-key-input")?.focus(), 100);
-}
-
-function saveKeyAndClose() {
-  const val = document.getElementById("api-key-input")?.value?.trim();
-  if (!val || !val.startsWith("gsk_")) {
-    alert("براہ کرم درست Groq API key داخل کریں (gsk_ سے شروع ہوتی ہے)");
-    return;
-  }
-  saveGroqApiKey(val);
-  document.getElementById("api-key-modal")?.remove();
-  // Update status badge
-  const badge = document.querySelector(".api-badge");
-  if (badge) badge.innerHTML = '<i class="fa-solid fa-circle-check"></i> Groq API Active';
-}
-
-// ============================================================
 // MAIN SEND FUNCTION — اصل Groq API Streaming
 // ============================================================
 async function sendAcademicQuery() {
@@ -869,12 +806,7 @@ async function sendAcademicQuery() {
   const textQuery = inputField.value.trim();
   if (textQuery === "" && !uploadedFile) return;
 
-  // API key چیک
   const apiKey = getGroqApiKey();
-  if (!apiKey) {
-    showApiKeyModal();
-    return;
-  }
 
   // --- User message bubble ---
   const now = new Date();
@@ -1041,8 +973,7 @@ async function sendAcademicQuery() {
       errMsg = currentAppLanguage === 'en'
         ? '❌ Invalid API key. Please update your Groq key.'
         : '❌ API key غلط ہے۔ براہ کرم اپنی Groq key اپڈیٹ کریں۔';
-      localStorage.removeItem("groq_api_key");
-      setTimeout(showApiKeyModal, 800);
+      // Key galat hai — console mein warning
     } else if (err.message && err.message.includes("429")) {
       errMsg = currentAppLanguage === 'en'
         ? '⏳ Rate limit reached. Please wait a moment and try again.'
