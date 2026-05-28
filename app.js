@@ -13,11 +13,11 @@ let uploadedFile = null;
 let activeLanguage = 'arabic';
 let activeStage = 'basic';
 let stageProgress = {
-  arabic: { basic: true, normal: false, expert: false, professional: false },
-  english: { basic: true, normal: false, expert: false, professional: false },
-  chinese: { basic: true, normal: false, expert: false, professional: false },
-  french: { basic: true, normal: false, expert: false, professional: false },
-  turkish: { basic: true, normal: false, expert: false, professional: false }
+  arabic: { basic: true, normal: false, expert: false, professional: false, mastery: false, scholar: false },
+  english: { basic: true, normal: false, expert: false, professional: false, mastery: false, scholar: false },
+  chinese: { basic: true, normal: false, expert: false, professional: false, mastery: false, scholar: false },
+  french: { basic: true, normal: false, expert: false, professional: false, mastery: false, scholar: false },
+  turkish: { basic: true, normal: false, expert: false, professional: false, mastery: false, scholar: false }
 };
 
 // --- BILINGUAL LOCALIZATION TRANSLATIONS ---
@@ -533,6 +533,72 @@ const languageData = {
 };
 
 
+
+// ============================================================
+// AI DICTIONARY — Koi bhi word likho, Urdu + English meaning
+// ============================================================
+async function lookupDictionaryWord() {
+  const input = document.getElementById("dict-input");
+  const resultBox = document.getElementById("dict-result");
+  if (!input || !resultBox) return;
+
+  const word = input.value.trim();
+  if (!word) return;
+
+  resultBox.innerHTML = `<div style="color:var(--text-muted);padding:1rem;">
+    <i class="fa-solid fa-spinner fa-spin"></i> تلاش ہو رہی ہے...
+  </div>`;
+
+  const apiKey = getGroqApiKey();
+  const prompt = `You are a multilingual dictionary. The user typed: "${word}"
+
+Detect the language and provide a clean dictionary entry in this exact HTML format (inline styles only, dark theme):
+
+<div style="padding:0.5rem 0;">
+  <div style="font-size:1.6rem;font-weight:800;color:var(--text-white);margin-bottom:0.3rem;">${word}</div>
+  <div style="font-size:0.8rem;color:var(--accent-cyan);margin-bottom:0.75rem;font-family:monospace;">[Detected language] • [Part of speech]</div>
+
+  <div style="display:flex;flex-direction:column;gap:0.6rem;">
+    <div style="background:rgba(0,212,255,0.05);border-right:3px solid var(--accent-cyan);padding:0.7rem 1rem;border-radius:4px 10px 10px 4px;">
+      <span style="color:var(--accent-cyan);font-weight:700;font-size:0.8rem;">🇵🇰 اردو مطلب:</span><br>
+      <span style="color:var(--text-white);font-size:1rem;">[Urdu meaning]</span>
+    </div>
+    <div style="background:rgba(124,58,237,0.05);border-right:3px solid var(--primary);padding:0.7rem 1rem;border-radius:4px 10px 10px 4px;">
+      <span style="color:var(--primary);font-weight:700;font-size:0.8rem;">🇬🇧 English Meaning:</span><br>
+      <span style="color:var(--text-white);font-size:1rem;">[English meaning/definition]</span>
+    </div>
+    <div style="background:rgba(16,185,129,0.05);border-right:3px solid var(--accent-green);padding:0.7rem 1rem;border-radius:4px 10px 10px 4px;">
+      <span style="color:var(--accent-green);font-weight:700;font-size:0.8rem;">📝 مثال / Example:</span><br>
+      <span style="color:var(--text-muted);font-size:0.9rem;">[Example sentence in original language] — [Urdu translation]</span>
+    </div>
+  </div>
+</div>
+
+Output ONLY the HTML, no markdown, no explanation.`;
+
+  try {
+    const response = await fetch(GROQ_API_URL, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: GROQ_MODEL,
+        messages: [{ role: "user", content: prompt }],
+        temperature: 0.3,
+        max_tokens: 600,
+        stream: false
+      })
+    });
+    const data = await response.json();
+    const html = data?.choices?.[0]?.message?.content || "نتیجہ نہیں ملا";
+    resultBox.innerHTML = html.replace(/```html|```/g, "").trim();
+  } catch(e) {
+    resultBox.innerHTML = `<div style="color:var(--accent-red);padding:1rem;">⚠️ خرابی: ${e.message}</div>`;
+  }
+}
+
 // --- GLOBAL EVENT LISTENERS & INITIALIZATION ---
 document.addEventListener("DOMContentLoaded", () => {
   setAppLanguage('ur'); // Default to Urdu layout
@@ -721,7 +787,7 @@ const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
 const GROQ_MODEL   = "llama-3.3-70b-versatile";
 
 // API key yahan rakhen — koi bhi user se nahi manga jayega
-const GROQ_API_KEY = "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";
+const GROQ_API_KEY = "YOUR_GROQ_API_KEY_HERE";
 
 function getGroqApiKey() {
   return GROQ_API_KEY;
@@ -2398,6 +2464,8 @@ function updateLanguageProgress() {
   updateStageUI('normal', progress.normal);
   updateStageUI('expert', progress.expert);
   updateStageUI('professional', progress.professional);
+  updateStageUI('mastery', progress.mastery || false);
+  updateStageUI('scholar', progress.scholar || false);
   
   // Dynamic refresh: if lesson workspace is active, reload active stage content
   const lessonSection = document.getElementById("lesson-workspace");
@@ -2756,7 +2824,7 @@ function finishQuizAssessment() {
 }
 
 function unlockNextStage(lang, currentStage) {
-  const stagesOrder = ['basic', 'normal', 'expert', 'professional'];
+  const stagesOrder = ['basic', 'normal', 'expert', 'professional', 'mastery', 'scholar'];
   const idx = stagesOrder.indexOf(currentStage);
   
   if (idx !== -1 && idx < 3) {

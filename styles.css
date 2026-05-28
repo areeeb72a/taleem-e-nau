@@ -1490,3 +1490,63 @@ body.ltr .mobile-brand {
 .message-bubble strong {
   color: var(--text-white);
 }
+
+/* ============================================================
+   ALIGNMENT FIX — AI answer cards hamesha left-aligned rahen
+   ============================================================ */
+.message.ai {
+  align-self: flex-start !important;
+  width: 92%;
+  max-width: 92%;
+}
+
+.message.ai .message-bubble {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Inner HTML divs inside AI bubble — direction fix */
+.message.ai .message-bubble > div,
+.message.ai .message-bubble h2,
+.message.ai .message-bubble p {
+  text-align: right;
+  direction: rtl;
+}
+
+/* ============================================================
+   NEW STAGE BADGES — Mastery (gold) & Scholar (emerald glow)
+   ============================================================ */
+.stage-badge.mastery {
+  background: rgba(245,158,11,0.15);
+  color: var(--secondary);
+  border: 1px solid var(--secondary);
+}
+
+.stage-badge.scholar {
+  background: rgba(16,185,129,0.15);
+  color: var(--accent-green);
+  border: 1px solid var(--accent-green);
+}
+
+/* Stages timeline — 6 columns on wide, 3 on medium, 2 on mobile */
+.stages-timeline {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+@media (min-width: 1300px) {
+  .stages-timeline { grid-template-columns: repeat(6, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .stages-timeline { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Dictionary input RTL placeholder fix */
+#dict-input::placeholder {
+  color: var(--text-dim);
+  font-family: var(--font-ur);
+}
+

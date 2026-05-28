@@ -313,7 +313,58 @@
               <span id="badge-status-professional" style="color: var(--text-muted); font-size: 0.85rem; font-weight: 600;"><i class="fa-solid fa-lock"></i> لاک ہے</span>
               <button class="stage-start-btn ur-text" id="btn-stage-professional" disabled onclick="startLanguageStage('professional')">لاک ہے</button>
             </div>
+
+          <!-- Stage 5: Mastery — Quranic Arabic -->
+          <div class="glass-card stage-card locked" id="card-stage-mastery">
+            <span class="stage-indicator">05</span>
+            <span class="stage-badge mastery ur-text" id="lbl-badge-mastery">مرحلہ ۵: قرآنی عربی (Mastery)</span>
+            <div class="ur-text">
+              <h4 id="lbl-desc-mastery" style="font-size:1.15rem;color:var(--text-white);margin-bottom:0.35rem;">قرآنی آیات و دعائیں</h4>
+              <p id="lbl-details-mastery" style="color:var(--text-muted);font-size:0.85rem;line-height:1.4;">قرآنی الفاظ، مشہور دعائیں اور اسلامی اقوال کا عمیق مطالعہ۔</p>
+            </div>
+            <div class="stage-card-footer">
+              <span id="badge-status-mastery" style="color:var(--text-muted);font-size:0.85rem;font-weight:600;"><i class="fa-solid fa-lock"></i> لاک ہے</span>
+              <button class="stage-start-btn ur-text" id="btn-stage-mastery" disabled onclick="startLanguageStage('mastery')">لاک ہے</button>
+            </div>
           </div>
+
+          <!-- Stage 6: Scholar — Hadith & Islamic Wisdom -->
+          <div class="glass-card stage-card locked" id="card-stage-scholar">
+            <span class="stage-indicator">06</span>
+            <span class="stage-badge scholar ur-text" id="lbl-badge-scholar">مرحلہ ۶: عالمانہ (Scholar)</span>
+            <div class="ur-text">
+              <h4 id="lbl-desc-scholar" style="font-size:1.15rem;color:var(--text-white);margin-bottom:0.35rem;">احادیث و حکمت</h4>
+              <p id="lbl-details-scholar" style="color:var(--text-muted);font-size:0.85rem;line-height:1.4;">مشہور احادیث، قرآنی محاورات اور اسلامی حکمت کا جامع علم۔</p>
+            </div>
+            <div class="stage-card-footer">
+              <span id="badge-status-scholar" style="color:var(--text-muted);font-size:0.85rem;font-weight:600;"><i class="fa-solid fa-lock"></i> لاک ہے</span>
+              <button class="stage-start-btn ur-text" id="btn-stage-scholar" disabled onclick="startLanguageStage('scholar')">لاک ہے</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- DICTIONARY WIDGET -->
+        <div class="glass-card" style="margin-top:1rem;">
+          <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem;">
+            <div style="width:38px;height:38px;background:linear-gradient(135deg,var(--primary),var(--accent-cyan));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;">📖</div>
+            <div>
+              <h3 class="ur-text" style="font-size:1.15rem;color:var(--text-white);margin:0;">فوری لغت (AI Dictionary)</h3>
+              <p class="ur-text" style="color:var(--text-muted);font-size:0.82rem;margin:0;">کوئی بھی لفظ لکھیں — اردو، انگریزی، عربی، چینی — فوری مطلب پائیں</p>
+            </div>
+          </div>
+          <div style="display:flex;gap:0.75rem;margin-bottom:1rem;">
+            <input type="text" id="dict-input" class="chat-input ur-text"
+              placeholder="کوئی بھی لفظ یہاں لکھیں... e.g. serendipity / محبت / مَرْحَبًا"
+              style="flex:1;border-radius:12px;padding:0.85rem 1.2rem;"
+              onkeydown="if(event.key==='Enter')lookupDictionaryWord()">
+            <button onclick="lookupDictionaryWord()"
+              style="padding:0.85rem 1.5rem;background:linear-gradient(135deg,var(--primary),var(--accent-cyan));
+              border:none;border-radius:12px;color:#fff;font-weight:700;cursor:pointer;white-space:nowrap;"
+              class="ur-text">
+              <i class="fa-solid fa-magnifying-glass"></i> تلاش کریں
+            </button>
+          </div>
+          <div id="dict-result" style="min-height:60px;"></div>
         </div>
         
         <!-- 4.2 INTERACTIVE LESSON MODULE WORKSPACE -->
