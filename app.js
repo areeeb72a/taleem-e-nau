@@ -108,6 +108,24 @@ const translations = {
     "btn-stage-expert-locked": "لاک ہے",
     "btn-stage-professional-locked": "لاک ہے",
     
+    "lbl-badge-mastery": "مرحلہ ۵: قرآنی عربی (Mastery)",
+    "lbl-desc-mastery": "قرآنی آیات و دعائیں",
+    "lbl-details-mastery": "قرآنی الفاظ، مشہور دعائیں اور اسلامی اقوال کا عمیق مطالعہ۔",
+    
+    "lbl-badge-scholar": "مرحلہ ۶: عالمانہ (Scholar)",
+    "lbl-desc-scholar": "احادیث و حکمت",
+    "lbl-details-scholar": "مشہور احادیث، قرآنی محاورات اور اسلامی حکمت کا جامع علم۔",
+    
+    "badge-status-mastery-unlocked": "<i class='fa-solid fa-circle-check'></i> کھلا ہوا ہے",
+    "badge-status-scholar-unlocked": "<i class='fa-solid fa-circle-check'></i> کھلا ہوا ہے",
+    "badge-status-mastery-locked": "<i class='fa-solid fa-lock'></i> لاک ہے",
+    "badge-status-scholar-locked": "<i class='fa-solid fa-lock'></i> لاک ہے",
+    
+    "btn-stage-mastery-unlocked": "شروع کریں",
+    "btn-stage-scholar-unlocked": "شروع کریں",
+    "btn-stage-mastery-locked": "لاک ہے",
+    "btn-stage-scholar-locked": "لاک ہے",
+    
     // Lessons UI
     "txt-btn-lesson-back": "<i class='fa-solid fa-arrow-right'></i> واپس جائیں",
     "txt-lesson-instructions": "مرحلہ مکمل کر کے ۲۰ سوالات کا کوئز دیں اور اگلا لیول ان لاک کریں!",
@@ -169,7 +187,7 @@ const translations = {
     "txt-teacher-title": "AI Empathetic Educational Guide (AI Teacher)",
     "txt-teacher-status": "<i class='fa-solid fa-circle'></i> Online | Ready to guide you step-by-step",
     "chat-user-input-placeholder": "Type your academic question here...",
-    "txt-welcome-chat-bubble": "Hello! I am your AI educational guide. Type any question from the Karachi Board curriculum or upload an image/PDF. I will explain it step-by-step in simple language!",
+    "txt-welcome-chat-bubble": "Hello! I am <b>Ustad Ji</b> — your AI teacher for Karachi Board (Classes 5-12). Ask any question in Math, Physics, Chemistry, Biology, or any subject. I will explain step-by-step with exam tips!",
     
     // Language Hub UI
     "txt-lang-title": "Global Language Learning Center",
@@ -212,6 +230,24 @@ const translations = {
     "btn-stage-normal-locked": "Locked",
     "btn-stage-expert-locked": "Locked",
     "btn-stage-professional-locked": "Locked",
+    
+    "lbl-badge-mastery": "Stage 5: Mastery (Quranic Arabic)",
+    "lbl-desc-mastery": "Quranic Verses & Prayers",
+    "lbl-details-mastery": "Quranic vocabulary, famous duas and Islamic wisdom.",
+    
+    "lbl-badge-scholar": "Stage 6: Scholar",
+    "lbl-desc-scholar": "Hadith & Wisdom",
+    "lbl-details-scholar": "Famous Ahadith, Quranic phrases and complete Islamic knowledge.",
+    
+    "badge-status-mastery-unlocked": "<i class='fa-solid fa-circle-check'></i> Unlocked",
+    "badge-status-scholar-unlocked": "<i class='fa-solid fa-circle-check'></i> Unlocked",
+    "badge-status-mastery-locked": "<i class='fa-solid fa-lock'></i> Locked",
+    "badge-status-scholar-locked": "<i class='fa-solid fa-lock'></i> Locked",
+    
+    "btn-stage-mastery-unlocked": "Start Stage",
+    "btn-stage-scholar-unlocked": "Start Stage",
+    "btn-stage-mastery-locked": "Locked",
+    "btn-stage-scholar-locked": "Locked",
     
     // Lessons UI
     "txt-btn-lesson-back": "<i class='fa-solid fa-arrow-left'></i> Go Back",
@@ -787,8 +823,7 @@ const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
 const GROQ_MODEL   = "llama-3.3-70b-versatile";
 
 // API key yahan rakhen — koi bhi user se nahi manga jayega
-const GROQ_API_KEY = "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
-";
+const GROQ_API_KEY = "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";
 
 function getGroqApiKey() {
   return GROQ_API_KEY;
