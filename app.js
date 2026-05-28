@@ -787,7 +787,8 @@ const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
 const GROQ_MODEL   = "llama-3.3-70b-versatile";
 
 // API key yahan rakhen — koi bhi user se nahi manga jayega
-const GROQ_API_KEY = "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";
+const GROQ_API_KEY = "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
+";
 
 function getGroqApiKey() {
   return GROQ_API_KEY;
@@ -965,11 +966,20 @@ async function sendAcademicQuery() {
     // Remove thinking bubble، AI bubble add کریں
     document.getElementById(thinkId)?.remove();
 
+    // English = LTR, Urdu = RTL
+    const isEnglish = currentAppLanguage === 'en';
+    const bubbleDir = isEnglish ? 'ltr' : 'rtl';
+    const bubbleAlign = isEnglish ? 'left' : 'right';
+    const bubbleClass = isEnglish ? 'message-bubble' : 'message-bubble ur-text';
+    const writingText = isEnglish ? 'Writing answer...' : 'لکھ رہے ہیں...';
+
     aiMsgDiv.innerHTML = `
-      <div class="message-bubble ur-text" id="stream-bubble-${uniqueMsgId}">
+      <div class="${bubbleClass}" id="stream-bubble-${uniqueMsgId}"
+        dir="${bubbleDir}"
+        style="text-align:${bubbleAlign};direction:${bubbleDir};">
         <span style="color:var(--text-muted);font-size:0.85rem;">
           <i class="fa-solid fa-pen-nib fa-beat" style="color:var(--accent-cyan);"></i>
-          لکھ رہے ہیں...
+          ${writingText}
         </span>
       </div>
       <div class="message-meta">${timeStr}</div>
@@ -1010,9 +1020,20 @@ async function sendAcademicQuery() {
       }
     }
 
-    // Stream ختم — rating section add کریں
+    // Stream ختم — direction set karo, rating add karo
     if (bubble) {
       bubble.innerHTML = accumulatedHTML;
+      // English mein LTR force karo — inline styles override bhi hatao
+      if (currentAppLanguage === 'en') {
+        bubble.setAttribute('dir', 'ltr');
+        bubble.style.direction = 'ltr';
+        bubble.style.textAlign = 'left';
+        // Andar ke saare elements bhi LTR
+        bubble.querySelectorAll('*').forEach(el => {
+          el.style.direction = 'ltr';
+          el.style.textAlign = 'left';
+        });
+      }
     }
 
     const ratingDiv = document.createElement("div");
