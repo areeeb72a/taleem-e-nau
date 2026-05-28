@@ -787,7 +787,7 @@ const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
 const GROQ_MODEL   = "llama-3.3-70b-versatile";
 
 // API key yahan rakhen — koi bhi user se nahi manga jayega
-const GROQ_API_KEY = "YOUR_GROQ_API_KEY_HERE";
+const GROQ_API_KEY = "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";
 
 function getGroqApiKey() {
   return GROQ_API_KEY;
@@ -2524,7 +2524,10 @@ function startLanguageStage(stage) {
   langHeader.style.display = "none";
   const dictWidget = document.getElementById("dict-widget");
   if (dictWidget) dictWidget.style.display = "none";
-  lessonSection.style.display = "flex";
+  
+  // Lesson show karo — scroll to top
+  lessonSection.style.cssText = "display:flex; flex-direction:column; gap:2rem; width:100%;";
+  window.scrollTo({ top: 0, behavior: 'smooth' });
   
   // Populate word cards and info
   const langConf = languageData[activeLanguage] || languageData['arabic'];
@@ -2580,7 +2583,7 @@ function exitLanguageStage() {
   const langHeader = document.querySelector(".lang-header");
   
   if (mapSection && lessonSection && langHeader) {
-    mapSection.style.display = "grid";
+    mapSection.style.display = "block";
     langHeader.style.display = "flex";
     lessonSection.style.display = "none";
     const dictWidget = document.getElementById("dict-widget");

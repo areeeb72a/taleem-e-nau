@@ -911,10 +911,19 @@ h1.section-title {
 
 /* Interactive Lesson view */
 .lesson-container {
-  display: none; /* Shown dynamically */
+  display: none;
   flex-direction: column;
   gap: 2rem;
   animation: viewFadeIn 0.4s ease;
+  width: 100%;
+}
+
+/* JS se display:flex set hone par show ho */
+#lesson-workspace[style*="flex"] {
+  display: flex !important;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
 }
 
 .lesson-header {
@@ -924,22 +933,24 @@ h1.section-title {
 }
 
 .back-btn {
-  background: transparent;
-  border: 1px solid var(--border-color);
-  color: var(--text-white);
-  padding: 0.6rem 1.2rem;
+  background: rgba(0,212,255,0.06);
+  border: 1px solid rgba(0,212,255,0.35);
+  color: var(--accent-cyan);
+  padding: 0.7rem 1.4rem;
   border-radius: var(--border-radius);
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 1rem;
   transition: var(--transition-smooth);
 }
 
 .back-btn:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: var(--text-white);
+  background: rgba(0,212,255,0.12);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 12px rgba(0,212,255,0.2);
 }
 
 .lesson-grid {
