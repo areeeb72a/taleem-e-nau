@@ -787,7 +787,7 @@ const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
 const GROQ_MODEL   = "llama-3.3-70b-versatile";
 
 // API key yahan rakhen — koi bhi user se nahi manga jayega
-const GROQ_API_KEY = "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";
+const GROQ_API_KEY = "YOUR_GROQ_API_KEY_HERE";
 
 function getGroqApiKey() {
   return GROQ_API_KEY;
@@ -2519,9 +2519,11 @@ function startLanguageStage(stage) {
   
   if (!mapSection || !lessonSection || !langHeader) return;
   
-  // Hide map list and language header, show active workspace
+  // Hide map, header, dictionary — show lesson only
   mapSection.style.display = "none";
   langHeader.style.display = "none";
+  const dictWidget = document.getElementById("dict-widget");
+  if (dictWidget) dictWidget.style.display = "none";
   lessonSection.style.display = "flex";
   
   // Populate word cards and info
@@ -2544,6 +2546,8 @@ function startLanguageStage(stage) {
       if (activeStage === 'basic') accentColor = "var(--accent-cyan)";
       else if (activeStage === 'normal') accentColor = "var(--accent-green)";
       else if (activeStage === 'expert') accentColor = "var(--secondary)";
+      else if (activeStage === 'mastery') accentColor = "#f59e0b";
+      else if (activeStage === 'scholar') accentColor = "#10b981";
       
       card.innerHTML = `
         <div class="word-card-accent" style="background:${accentColor}; box-shadow:0 0 10px ${accentColor}"></div>
@@ -2564,7 +2568,10 @@ function getStageUrduName(stage) {
   if (stage === 'basic') return isEn ? "Stage 1: Basic" : "مرحلہ ۱: بنیادی (Basic)";
   if (stage === 'normal') return isEn ? "Stage 2: Normal" : "مرحلہ ۲: درمیانہ (Normal)";
   if (stage === 'expert') return isEn ? "Stage 3: Expert" : "مرحلہ ۳: ماہرانہ (Expert)";
-  return isEn ? "Stage 4: Professional" : "مرحلہ ۴: پیشہ ورانہ (Professional)";
+  if (stage === 'professional') return isEn ? "Stage 4: Professional" : "مرحلہ ۴: پیشہ ورانہ (Professional)";
+  if (stage === 'mastery') return isEn ? "Stage 5: Mastery" : "مرحلہ ۵: قرآنی عربی (Mastery)";
+  if (stage === 'scholar') return isEn ? "Stage 6: Scholar" : "مرحلہ ۶: عالمانہ (Scholar)";
+  return isEn ? "Stage 1: Basic" : "مرحلہ ۱: بنیادی (Basic)";
 }
 
 function exitLanguageStage() {
@@ -2576,6 +2583,13 @@ function exitLanguageStage() {
     mapSection.style.display = "grid";
     langHeader.style.display = "flex";
     lessonSection.style.display = "none";
+    const dictWidget = document.getElementById("dict-widget");
+    if (dictWidget) dictWidget.style.display = "block";
+    // Assessment bhi hide karo
+    const assessDiv = document.getElementById("assessment-workspace");
+    if (assessDiv) assessDiv.style.display = "none";
+    const resultsDiv = document.getElementById("results-workspace");
+    if (resultsDiv) resultsDiv.style.display = "none";
   }
 }
 
@@ -2607,8 +2621,10 @@ let userAnswers = [];
 let quizScore = 0;
 
 function startStageAssessment() {
-  // Hide lessons, show quiz
+  // Hide lessons, dict — show quiz
   document.getElementById("lesson-workspace").style.display = "none";
+  const dictWidget = document.getElementById("dict-widget");
+  if (dictWidget) dictWidget.style.display = "none";
   
   const quizSection = document.getElementById("assessment-workspace");
   if (quizSection) quizSection.style.display = "block";

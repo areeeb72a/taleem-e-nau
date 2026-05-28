@@ -1584,20 +1584,25 @@ body.ltr .mobile-brand {
   border: 1px solid var(--accent-green);
 }
 
-/* Stages timeline — 6 columns on wide, 3 on medium, 2 on mobile */
+/* Stages timeline — 2x3 grid, no overflow */
 .stages-timeline {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  gap: 1.25rem;
   margin-top: 1rem;
+  width: 100%;
 }
 
-@media (min-width: 1300px) {
+@media (min-width: 1400px) {
   .stages-timeline { grid-template-columns: repeat(6, 1fr); }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .stages-timeline { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 540px) {
+  .stages-timeline { grid-template-columns: 1fr; }
 }
 
 /* Dictionary input RTL placeholder fix */
