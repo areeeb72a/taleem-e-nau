@@ -1550,3 +1550,61 @@ body.ltr .mobile-brand {
   font-family: var(--font-ur);
 }
 
+
+/* ============================================================
+   MOBILE CHAT FIX — bubbles cut nahi honge
+   ============================================================ */
+.chat-messages {
+  padding: 1rem !important;
+  overflow-x: hidden;
+}
+
+.message {
+  max-width: 88% !important;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.message.user {
+  align-self: flex-end !important;
+  max-width: 78% !important;
+}
+
+.message.ai {
+  align-self: flex-start !important;
+  max-width: 96% !important;
+  width: 96% !important;
+}
+
+.message-bubble {
+  overflow-x: auto;
+  word-break: break-word;
+}
+
+/* Inner divs inside AI answer — no overflow */
+.message.ai .message-bubble div {
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
+
+/* Mobile font size thoda chhota */
+@media (max-width: 768px) {
+  .message-bubble {
+    font-size: 0.92rem !important;
+    padding: 0.85rem 1rem !important;
+  }
+  .message.ai {
+    max-width: 98% !important;
+    width: 98% !important;
+  }
+  .assistant-workspace {
+    grid-template-columns: 1fr !important;
+    height: auto !important;
+  }
+  .selection-panel {
+    display: none;
+  }
+  .chat-container {
+    height: 75vh;
+  }
+}
