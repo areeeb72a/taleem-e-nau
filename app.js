@@ -2902,7 +2902,7 @@ function unlockNextStage(lang, currentStage) {
   const stagesOrder = ['basic', 'normal', 'expert', 'professional', 'mastery', 'scholar'];
   const idx = stagesOrder.indexOf(currentStage);
   
-  if (idx !== -1 && idx < 3) {
+  if (idx !== -1 && idx < stagesOrder.length - 1) {
     const nextStage = stagesOrder[idx + 1];
     stageProgress[lang][nextStage] = true;
     updateLanguageProgress(); // Update UI locks
