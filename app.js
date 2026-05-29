@@ -823,7 +823,7 @@ const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
 const GROQ_MODEL   = "llama-3.3-70b-versatile";
 
 // API key yahan rakhen — koi bhi user se nahi manga jayega
-const GROQ_API_KEY = "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";
+const GROQ_API_KEY = "YOUR_GROQ_API_KEY_HERE";
 
 function getGroqApiKey() {
   return GROQ_API_KEY;
